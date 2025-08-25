@@ -374,62 +374,6 @@
             box-shadow: 0 15px 35px rgba(255, 111, 97, 0.6);
         }
 
-        #gameButton {
-            background: linear-gradient(45deg, #9C27B0, #673AB7, #3F51B5);
-            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
-        }
-
-        #gameButton:hover {
-            background: linear-gradient(45deg, #3F51B5, #673AB7, #9C27B0);
-            box-shadow: 0 15px 35px rgba(156, 39, 176, 0.6);
-        }
-
-        /* 游戏按钮样式 */
-        .game-btn {
-            display: block;
-            width: 100%;
-            padding: 25px 20px;
-            margin: 15px 0;
-            background: linear-gradient(45deg, rgba(156, 39, 176, 0.9), rgba(103, 58, 183, 0.9));
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .game-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(156, 39, 176, 0.5);
-        }
-
-        .game-btn:active {
-            transform: translateY(-1px) scale(0.98);
-        }
-
-        .game-btn.minecraft {
-            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
-        }
-
-        .game-btn.minecraft:hover {
-            box-shadow: 0 12px 30px rgba(76, 175, 80, 0.5);
-        }
-
-        .game-btn.dino {
-            background: linear-gradient(45deg, #FF9800, #FF5722, #E91E63);
-            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.3);
-        }
-
-        .game-btn.dino:hover {
-            box-shadow: 0 12px 30px rgba(255, 152, 0, 0.5);
-        }
-
         /* 毛玻璃效果模态框 */
         .modal {
             display: none;
@@ -526,7 +470,7 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        input[type"text"]::placeholder {
+        input[type="text"]::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
 
@@ -723,6 +667,61 @@
             color: #aaa;
         }
 
+        /* 新增反馈悬浮球样式 */
+        #feedbackBall {
+            position: fixed;
+            top: 90px; /* 在主题切换按钮下方 */
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, rgba(74, 74, 104, 0.9), rgba(54, 54, 84, 0.9));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 40;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(74, 74, 104, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #feedbackBall:hover {
+            transform: translateY(-2px) scale(1.1) rotate(15deg);
+            box-shadow: 0 12px 30px rgba(74, 74, 104, 0.6);
+        }
+
+        /* 信封图标 - 使用CSS绘制 */
+        .envelope-icon {
+            width: 24px;
+            height: 18px;
+            background: white;
+            position: relative;
+            border-radius: 3px;
+        }
+
+        .envelope-icon::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 8px solid white;
+        }
+
+        /* 暗色模式适配 */
+        body.dark-mode #feedbackBall {
+            background: linear-gradient(45deg, rgba(255, 111, 97, 0.9), rgba(255, 61, 47, 0.9));
+            box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4);
+        }
+
     </style>
 </head>
 <body>
@@ -734,7 +733,6 @@
         <a href="https://t.me/sbjliuqun" class="link" target="_blank" id="groupLink">飞机群（链接）</a>
         <button class="action-btn" id="addGroupButton">加QQ群</button>
         <button class="action-btn" id="memberButton">人员名单</button>
-        <button class="action-btn" id="gameButton">游戏</button>
         <button class="action-btn" id="postButton">投稿</button>
     </div>
 
@@ -793,12 +791,13 @@
         </div>
     </div>
 
-    <div id="gameModal" class="modal">
+    <!-- 新增反馈邮箱弹窗 -->
+    <div id="feedbackModal" class="modal">
         <div class="modal-content">
-            <h3 id="gameTitle">选择游戏</h3>
-            <a href="https://mcjs.tslcyh.cn/" class="game-btn minecraft" target="_blank">我的世界</a>
-            <a href="chrome://dino/" class="game-btn dino" target="_blank">谷歌小恐龙</a>
-            <button onclick="closeGameModal()">关闭</button>
+            <h3>反馈邮箱</h3>
+            <p>seedtutshsb@keemail.me</p>
+            <button id="copyEmailBtn">复制邮箱</button>
+            <button onclick="closeFeedbackModal()">关闭</button>
         </div>
     </div>
 
@@ -806,6 +805,11 @@
     <button id="themeToggleButton">
         <div class="sun-icon"></div>
         <div class="moon-icon"></div>
+    </button>
+
+    <!-- 新增反馈悬浮球 -->
+    <button id="feedbackBall" class="floating-ball">
+        <div class="envelope-icon"></div>
     </button>
 
     <!-- 语言选择 -->
@@ -825,7 +829,6 @@
             document.getElementById('sponsorButton').addEventListener('click', showSponsorImage);
             document.getElementById('addGroupButton').addEventListener('click', showAddGroupDialog);
             document.getElementById('memberButton').addEventListener('click', showMemberList);
-            document.getElementById('gameButton').addEventListener('click', showGameModal);
             document.getElementById('postButton').addEventListener('click', showPostModal);
             document.getElementById('themeToggleButton').addEventListener('click', toggleTheme);
             document.getElementById('languageSelect').addEventListener('change', changeLanguage);
@@ -835,6 +838,10 @@
             document.getElementById('copyKeyBtn').addEventListener('click', copyRandomKey);
             document.getElementById('copyGroupBtn').addEventListener('click', copyGroupNumber);
             
+            // 新增事件监听器
+            document.getElementById('feedbackBall').addEventListener('click', showFeedbackModal);
+            document.getElementById('copyEmailBtn').addEventListener('click', copyEmail);
+            
             // 添加全局点击特效（只在非交互元素上）
             document.addEventListener('click', function(e) {
                 // 只在不包含特定类的元素上显示点击效果
@@ -843,7 +850,8 @@
                     !e.target.closest('.modal') && 
                     !e.target.closest('.sponsor-img') &&
                     !e.target.closest('#themeToggleButton') &&
-                    !e.target.closest('.language-select')) {
+                    !e.target.closest('.language-select') &&
+                    !e.target.closest('#feedbackBall')) {
                     createClickEffect(e);
                 }
             });
@@ -871,7 +879,7 @@
 
         // 按钮悬浮效果
         function addButtonHoverEffects() {
-            const buttons = document.querySelectorAll('.action-btn, .link, .modal button, .sponsor-img button, #themeToggleButton, .language-select, .game-btn');
+            const buttons = document.querySelectorAll('.action-btn, .link, .modal button, .sponsor-img button, #themeToggleButton, .language-select, #feedbackBall');
             
             buttons.forEach(button => {
                 // 鼠标进入效果
@@ -879,7 +887,7 @@
                     this.style.transform = this.style.transform.replace('scale(0.95)', 'scale(1.05)');
                     
                     // 为链接和主要按钮添加粒子效果
-                    if (this.classList.contains('action-btn') || this.classList.contains('link') || this.classList.contains('game-btn')) {
+                    if (this.classList.contains('action-btn') || this.classList.contains('link')) {
                         createHoverParticles(this, e);
                     }
                 });
@@ -898,14 +906,7 @@
             
             for (let i = 0; i < particles; i++) {
                 const particle = document.createElement('div');
-                let particleClass = 'btn-particle';
-                
-                if (button.classList.contains('link')) {
-                    particleClass = 'link-particle';
-                } else if (button.classList.contains('game-btn')) {
-                    particleClass = button.classList.contains('minecraft') ? 'btn-particle' : 'link-particle';
-                }
-                
+                const particleClass = button.classList.contains('link') ? 'link-particle' : 'btn-particle';
                 particle.className = particleClass;
                 
                 // 随机大小和位置
@@ -980,45 +981,29 @@
                 document.getElementById("groupLink").textContent = "飞机群（链接）";
                 document.getElementById("addGroupButton").textContent = "加QQ群";
                 document.getElementById("memberButton").textContent = "人员名单";
-                document.getElementById("gameButton").textContent = "游戏";
                 document.getElementById("postButton").textContent = "投稿";
                 document.getElementById("postModalTitle").textContent = "我的QQ号：3936343697";
                 document.getElementById("welcomeTitle").textContent = "欢迎您的加入！";
                 document.getElementById("memberTitle").textContent = "人员名单";
-                document.getElementById("gameTitle").textContent = "选择游戏";
             } else if (language === "zh-TW") {
                 document.getElementById("title").textContent = "歡迎贊助";
                 document.getElementById("groupLink").textContent = "飛機群（鏈接）";
                 document.getElementById("addGroupButton").textContent = "加QQ群";
                 document.getElementById("memberButton").textContent = "人員名單";
-                document.getElementById("gameButton").textContent = "遊戲";
                 document.getElementById("postButton").textContent = "投稿";
                 document.getElementById("postModalTitle").textContent = "我的QQ號：3936343697";
                 document.getElementById("welcomeTitle").textContent = "歡迎您的加入！";
                 document.getElementById("memberTitle").textContent = "人員名單";
-                document.getElementById("gameTitle").textContent = "選擇遊戲";
             } else if (language === "en") {
                 document.getElementById("title").textContent = "Welcome to Support";
                 document.getElementById("groupLink").textContent = "Telegram Group (Link)";
                 document.getElementById("addGroupButton").textContent = "Join QQ Group";
                 document.getElementById("memberButton").textContent = "Member List";
-                document.getElementById("gameButton").textContent = "Games";
                 document.getElementById("postButton").textContent = "Submit";
                 document.getElementById("postModalTitle").textContent = "My QQ number: 3936343697";
                 document.getElementById("welcomeTitle").textContent = "Welcome to the community!";
                 document.getElementById("memberTitle").textContent = "Member List";
-                document.getElementById("gameTitle").textContent = "Select Game";
             }
-        }
-
-        // 显示游戏弹窗
-        function showGameModal() {
-            document.getElementById("gameModal").style.display = "block";
-        }
-
-        // 关闭游戏弹窗
-        function closeGameModal() {
-            document.getElementById("gameModal").style.display = "none";
         }
 
         // 显示人员名单弹窗
@@ -1146,6 +1131,28 @@
         // 关闭随机密钥弹窗
         function closeRandomKeyModal() {
             document.getElementById("randomKeyModal").style.display = "none";
+        }
+
+        // 新增功能：显示反馈邮箱弹窗
+        function showFeedbackModal() {
+            document.getElementById("feedbackModal").style.display = "block";
+        }
+
+        // 新增功能：关闭反馈邮箱弹窗
+        function closeFeedbackModal() {
+            document.getElementById("feedbackModal").style.display = "none";
+        }
+
+        // 新增功能：复制邮箱
+        function copyEmail() {
+            var email = "seedtutshsb@keemail.me";
+            var textarea = document.createElement('textarea');
+            textarea.value = email;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert("邮箱已复制：" + email);
         }
     </script>
 </body>
