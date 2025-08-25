@@ -374,6 +374,62 @@
             box-shadow: 0 15px 35px rgba(255, 111, 97, 0.6);
         }
 
+        #gameButton {
+            background: linear-gradient(45deg, #9C27B0, #673AB7, #3F51B5);
+            box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+        }
+
+        #gameButton:hover {
+            background: linear-gradient(45deg, #3F51B5, #673AB7, #9C27B0);
+            box-shadow: 0 15px 35px rgba(156, 39, 176, 0.6);
+        }
+
+        /* 游戏按钮样式 */
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 25px 20px;
+            margin: 15px 0;
+            background: linear-gradient(45deg, rgba(156, 39, 176, 0.9), rgba(103, 58, 183, 0.9));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .game-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(156, 39, 176, 0.5);
+        }
+
+        .game-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .game-btn.minecraft {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .game-btn.minecraft:hover {
+            box-shadow: 0 12px 30px rgba(76, 175, 80, 0.5);
+        }
+
+        .game-btn.dino {
+            background: linear-gradient(45deg, #FF9800, #FF5722, #E91E63);
+            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.3);
+        }
+
+        .game-btn.dino:hover {
+            box-shadow: 0 12px 30px rgba(255, 152, 0, 0.5);
+        }
+
         /* 毛玻璃效果模态框 */
         .modal {
             display: none;
@@ -470,7 +526,7 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        input[type="text"]::placeholder {
+        input[type"text"]::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
 
@@ -678,6 +734,7 @@
         <a href="https://t.me/sbjliuqun" class="link" target="_blank" id="groupLink">飞机群（链接）</a>
         <button class="action-btn" id="addGroupButton">加QQ群</button>
         <button class="action-btn" id="memberButton">人员名单</button>
+        <button class="action-btn" id="gameButton">游戏</button>
         <button class="action-btn" id="postButton">投稿</button>
     </div>
 
@@ -736,6 +793,15 @@
         </div>
     </div>
 
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <h3 id="gameTitle">选择游戏</h3>
+            <a href="https://mcjs.tslcyh.cn/" class="game-btn minecraft" target="_blank">我的世界</a>
+            <a href="chrome://dino/" class="game-btn dino" target="_blank">谷歌小恐龙</a>
+            <button onclick="closeGameModal()">关闭</button>
+        </div>
+    </div>
+
     <!-- 主题切换按钮 - 太阳/月亮图标 -->
     <button id="themeToggleButton">
         <div class="sun-icon"></div>
@@ -759,6 +825,7 @@
             document.getElementById('sponsorButton').addEventListener('click', showSponsorImage);
             document.getElementById('addGroupButton').addEventListener('click', showAddGroupDialog);
             document.getElementById('memberButton').addEventListener('click', showMemberList);
+            document.getElementById('gameButton').addEventListener('click', showGameModal);
             document.getElementById('postButton').addEventListener('click', showPostModal);
             document.getElementById('themeToggleButton').addEventListener('click', toggleTheme);
             document.getElementById('languageSelect').addEventListener('change', changeLanguage);
@@ -804,7 +871,7 @@
 
         // 按钮悬浮效果
         function addButtonHoverEffects() {
-            const buttons = document.querySelectorAll('.action-btn, .link, .modal button, .sponsor-img button, #themeToggleButton, .language-select');
+            const buttons = document.querySelectorAll('.action-btn, .link, .modal button, .sponsor-img button, #themeToggleButton, .language-select, .game-btn');
             
             buttons.forEach(button => {
                 // 鼠标进入效果
@@ -812,7 +879,7 @@
                     this.style.transform = this.style.transform.replace('scale(0.95)', 'scale(1.05)');
                     
                     // 为链接和主要按钮添加粒子效果
-                    if (this.classList.contains('action-btn') || this.classList.contains('link')) {
+                    if (this.classList.contains('action-btn') || this.classList.contains('link') || this.classList.contains('game-btn')) {
                         createHoverParticles(this, e);
                     }
                 });
@@ -831,7 +898,14 @@
             
             for (let i = 0; i < particles; i++) {
                 const particle = document.createElement('div');
-                const particleClass = button.classList.contains('link') ? 'link-particle' : 'btn-particle';
+                let particleClass = 'btn-particle';
+                
+                if (button.classList.contains('link')) {
+                    particleClass = 'link-particle';
+                } else if (button.classList.contains('game-btn')) {
+                    particleClass = button.classList.contains('minecraft') ? 'btn-particle' : 'link-particle';
+                }
+                
                 particle.className = particleClass;
                 
                 // 随机大小和位置
@@ -906,29 +980,45 @@
                 document.getElementById("groupLink").textContent = "飞机群（链接）";
                 document.getElementById("addGroupButton").textContent = "加QQ群";
                 document.getElementById("memberButton").textContent = "人员名单";
+                document.getElementById("gameButton").textContent = "游戏";
                 document.getElementById("postButton").textContent = "投稿";
                 document.getElementById("postModalTitle").textContent = "我的QQ号：3936343697";
                 document.getElementById("welcomeTitle").textContent = "欢迎您的加入！";
                 document.getElementById("memberTitle").textContent = "人员名单";
+                document.getElementById("gameTitle").textContent = "选择游戏";
             } else if (language === "zh-TW") {
                 document.getElementById("title").textContent = "歡迎贊助";
                 document.getElementById("groupLink").textContent = "飛機群（鏈接）";
                 document.getElementById("addGroupButton").textContent = "加QQ群";
                 document.getElementById("memberButton").textContent = "人員名單";
+                document.getElementById("gameButton").textContent = "遊戲";
                 document.getElementById("postButton").textContent = "投稿";
                 document.getElementById("postModalTitle").textContent = "我的QQ號：3936343697";
                 document.getElementById("welcomeTitle").textContent = "歡迎您的加入！";
                 document.getElementById("memberTitle").textContent = "人員名單";
+                document.getElementById("gameTitle").textContent = "選擇遊戲";
             } else if (language === "en") {
                 document.getElementById("title").textContent = "Welcome to Support";
                 document.getElementById("groupLink").textContent = "Telegram Group (Link)";
                 document.getElementById("addGroupButton").textContent = "Join QQ Group";
                 document.getElementById("memberButton").textContent = "Member List";
+                document.getElementById("gameButton").textContent = "Games";
                 document.getElementById("postButton").textContent = "Submit";
                 document.getElementById("postModalTitle").textContent = "My QQ number: 3936343697";
                 document.getElementById("welcomeTitle").textContent = "Welcome to the community!";
                 document.getElementById("memberTitle").textContent = "Member List";
+                document.getElementById("gameTitle").textContent = "Select Game";
             }
+        }
+
+        // 显示游戏弹窗
+        function showGameModal() {
+            document.getElementById("gameModal").style.display = "block";
+        }
+
+        // 关闭游戏弹窗
+        function closeGameModal() {
+            document.getElementById("gameModal").style.display = "none";
         }
 
         // 显示人员名单弹窗
