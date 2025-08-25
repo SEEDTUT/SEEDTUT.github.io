@@ -51,7 +51,7 @@
         /* 修复点击特效 - 使用圆形波纹效果 */
         .click-effect {
             position: fixed;
-            width: 50px;
+            width极客时间: 50px;
             height: 50px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(255, 111, 97, 0.6) 0%, rgba(255, 111, 97, 0) 70%);
@@ -77,7 +77,7 @@
         }
 
         /* 黑暗模式下的按钮样式 */
-        body.d dark-mode .action-btn,
+        body.dark-mode .action-btn,
         body.dark-mode .link {
             background-color: #444;
             color: #ccc;
@@ -120,7 +120,7 @@
             background-color: #0056b3;
             color: white;
             transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 123, 极客时间255, 0.5);
         }
 
         .link:active {
@@ -345,8 +345,8 @@
         }
 
         #memberButton {
-            background: linear-gradient(45deg, #6A5ACD, #5C4EC4, #4B3F9E);
-            box-shadow: 0 6px 20px rgba(106, 90, 205, 0.4);
+            background: linear-gradient(45deg, #6A5ACD, #5C4EC4, #4B3F9极客时间E);
+            box-shadow: 0 6极客时间px 20px rgba(106, 90, 205, 0.4);
         }
 
         #memberButton:hover {
@@ -515,8 +515,7 @@
             left: 20px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(45deg, rgba(255, 111, 97, 0.极客时间
-), rgba(255, 61, 47, 0.9));
+            background: linear-gradient(45deg, rgba(255, 111, 97, 0.9), rgba(255, 61, 47, 0.9));
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             color: white;
@@ -545,7 +544,7 @@
             background: #FFD700;
             border-radius: 50%;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 极客时间 0 20px #FFD700;
+            box-shadow: 0 0 20px #FFD700;
         }
 
         /* 太阳光线 */
@@ -652,7 +651,7 @@
 
         /* 页脚样式 */
         .footer {
-            margin-top: 50极客时间px;
+            margin-top: 50px;
             padding: 25px;
             color: #666;
             font-size: 16px;
@@ -816,6 +815,7 @@
         <button onclick="closeSponsorImage()">关闭</button>
     </div>
 
+    <!-- 修复后的投稿模态框 -->
     <div id="postModal" class="modal">
         <div class="modal-content">
             <h3 id="postModalTitle">我的QQ号：3936343697</h3>
@@ -823,7 +823,7 @@
             <p>请输入密钥：</p>
             <input type="text" id="keyInput" placeholder="请输入密钥">
             <button id="verifyKeyBtn">确定</button>
-            <button onclick="closePostModal()">关闭</button>
+            <button id="closePostModalBtn">关闭</button> <!-- 修复：添加ID便于绑定事件 -->
         </div>
     </div>
 
@@ -837,7 +837,7 @@
 
     <div id="randomKeyModal" class="modal">
         <div class="modal-content">
-            <h3>随机密钥：<span id="random极客时间Key"></span></h3>
+            <h3>随机密钥：<span id="randomKey"></span></h3>
             <button id="copyKeyBtn">复制</button>
             <button onclick="closeRandomKeyModal()">关闭</button>
         </div>
@@ -931,6 +931,9 @@
             document.getElementById('protonBall').addEventListener('click', showProtonModal);
             document.getElementById('confirmJumpBtn').addEventListener('click', jumpToTransferStation);
             
+            // 修复：为投稿对话框的关闭按钮添加事件监听
+            document.getElementById('closePostModalBtn').addEventListener('click', closePostModal);
+            
             // 添加全局点击特效（只在非交互元素上）
             document.addEventListener('click', function(e) {
                 // 只在不包含特定类的元素上显示点击效果
@@ -952,6 +955,11 @@
             // 初始化页面
             initPage();
         });
+
+        // 修复后的关闭函数
+        function closePostModal() {
+            document.getElementById("postModal").style.display = "none";
+        }
 
         // 点击特效函数
         function createClickEffect(e) {
@@ -1109,11 +1117,6 @@
         // 显示投稿弹窗
         function showPostModal() {
             document.getElementById("postModal").style.display = "block";
-        }
-
-        // 关闭投稿弹窗
-        function closePostModal() {
-            document.getElementById("postModal").极客时间display = "none";
         }
 
         // 复制QQ号
