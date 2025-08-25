@@ -77,7 +77,7 @@
         }
 
         /* 黑暗模式下的按钮样式 */
-        body.dark-mode .action-btn,
+        body.d dark-mode .action-btn,
         body.dark-mode .link {
             background-color: #444;
             color: #ccc;
@@ -515,7 +515,8 @@
             left: 20px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(45deg, rgba(255, 111, 97, 0.9), rgba(255, 61, 47, 0.9));
+            background: linear-gradient(45deg, rgba(255, 111, 97, 0.极客时间
+), rgba(255, 61, 47, 0.9));
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             color: white;
@@ -544,7 +545,7 @@
             background: #FFD700;
             border-radius: 50%;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 20px #FFD700;
+            box-shadow: 极客时间 0 20px #FFD700;
         }
 
         /* 太阳光线 */
@@ -651,7 +652,7 @@
 
         /* 页脚样式 */
         .footer {
-            margin-top: 50px;
+            margin-top: 50极客时间px;
             padding: 25px;
             color: #666;
             font-size: 16px;
@@ -667,10 +668,10 @@
             color: #aaa;
         }
 
-        /* 新增反馈悬浮球样式 */
+        /* 反馈悬浮球样式 */
         #feedbackBall {
             position: fixed;
-            top: 90px; /* 在主题切换按钮下方 */
+            top: 90px; /* 位于主题按钮下方 */
             left: 20px;
             width: 50px;
             height: 50px;
@@ -695,7 +696,7 @@
             box-shadow: 0 12px 30px rgba(74, 74, 104, 0.6);
         }
 
-        /* 信封图标 - 使用CSS绘制 */
+        /* 信封图标 */
         .envelope-icon {
             width: 24px;
             height: 18px;
@@ -722,6 +723,76 @@
             box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4);
         }
 
+        /* 新增质子悬浮球样式 */
+        #protonBall {
+            position: fixed;
+            top: 160px; /* 位于邮箱按钮下方 */
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, rgba(54, 54, 149, 0.9), rgba(41, 41, 117, 0.9));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 40;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(54, 54, 149, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #protonBall:hover {
+            transform: translateY(-2px) scale(1.1) rotate(15deg);
+            box-shadow: 0 12px 30px rgba(54, 54, 149, 0.6);
+        }
+
+        /* 质子核心 */
+        .proton-core {
+            width: 12px;
+            height: 12px;
+            background: #FF6B6B;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 2;
+            box-shadow: 0 0 10px #FF6B6B;
+        }
+
+        /* 旋转电子轨道 */
+        .proton-orbit {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: orbitRotate 3s linear infinite;
+        }
+
+        /* 电子粒子 */
+        .proton-electron {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #4ECDC4;
+            border-radius: 50%;
+            top: -4px;
+            left: 11px;
+            box-shadow: 0 0 8px #4ECDC4;
+        }
+
+        /* 轨道旋转动画 */
+        @keyframes orbitRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 暗色模式适配 */
+        body.dark-mode #protonBall {
+            background: linear-gradient(45deg, rgba(106, 90, 205, 0.9), rgba(74, 60, 179, 0.9));
+            box-shadow: 0 6px 20px rgba(106, 90, 205, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -766,7 +837,7 @@
 
     <div id="randomKeyModal" class="modal">
         <div class="modal-content">
-            <h3>随机密钥：<span id="randomKey"></span></h3>
+            <h3>随机密钥：<span id="random极客时间Key"></span></h3>
             <button id="copyKeyBtn">复制</button>
             <button onclick="closeRandomKeyModal()">关闭</button>
         </div>
@@ -791,7 +862,6 @@
         </div>
     </div>
 
-    <!-- 新增反馈邮箱弹窗 -->
     <div id="feedbackModal" class="modal">
         <div class="modal-content">
             <h3>反馈邮箱</h3>
@@ -801,15 +871,32 @@
         </div>
     </div>
 
-    <!-- 主题切换按钮 - 太阳/月亮图标 -->
+    <div id="protonModal" class="modal">
+        <div class="modal-content">
+            <h3>跳转到中转站</h3>
+            <p>确定要跳转到中转站吗？</p>
+            <button id="confirmJumpBtn">确定</button>
+            <button onclick="closeProtonModal()">取消</button>
+        </div>
+    </div>
+
+    <!-- 主题切换按钮 -->
     <button id="themeToggleButton">
         <div class="sun-icon"></div>
         <div class="moon-icon"></div>
     </button>
 
-    <!-- 新增反馈悬浮球 -->
-    <button id="feedbackBall" class="floating-ball">
+    <!-- 反馈悬浮球 -->
+    <button id="feedbackBall">
         <div class="envelope-icon"></div>
+    </button>
+
+    <!-- 质子悬浮球 -->
+    <button id="protonBall">
+        <div class="proton-core"></div>
+        <div class="proton-orbit">
+            <div class="proton-electron"></div>
+        </div>
     </button>
 
     <!-- 语言选择 -->
@@ -841,6 +928,8 @@
             // 新增事件监听器
             document.getElementById('feedbackBall').addEventListener('click', showFeedbackModal);
             document.getElementById('copyEmailBtn').addEventListener('click', copyEmail);
+            document.getElementById('protonBall').addEventListener('click', showProtonModal);
+            document.getElementById('confirmJumpBtn').addEventListener('click', jumpToTransferStation);
             
             // 添加全局点击特效（只在非交互元素上）
             document.addEventListener('click', function(e) {
@@ -851,7 +940,8 @@
                     !e.target.closest('.sponsor-img') &&
                     !e.target.closest('#themeToggleButton') &&
                     !e.target.closest('.language-select') &&
-                    !e.target.closest('#feedbackBall')) {
+                    !e.target.closest('#feedbackBall') &&
+                    !e.target.closest('#protonBall')) {
                     createClickEffect(e);
                 }
             });
@@ -879,7 +969,7 @@
 
         // 按钮悬浮效果
         function addButtonHoverEffects() {
-            const buttons = document.querySelectorAll('.action-btn, .link, .modal button, .sponsor-img button, #themeToggleButton, .language-select, #feedbackBall');
+            const buttons = document.querySelectorAll('.action-btn, .link, .modal button, .sponsor-img button, #themeToggleButton, .language-select, #feedbackBall, #protonBall');
             
             buttons.forEach(button => {
                 // 鼠标进入效果
@@ -1023,7 +1113,7 @@
 
         // 关闭投稿弹窗
         function closePostModal() {
-            document.getElementById("postModal").style.display = "none";
+            document.getElementById("postModal").极客时间display = "none";
         }
 
         // 复制QQ号
@@ -1133,17 +1223,17 @@
             document.getElementById("randomKeyModal").style.display = "none";
         }
 
-        // 新增功能：显示反馈邮箱弹窗
+        // 显示反馈邮箱弹窗
         function showFeedbackModal() {
             document.getElementById("feedbackModal").style.display = "block";
         }
 
-        // 新增功能：关闭反馈邮箱弹窗
+        // 关闭反馈邮箱弹窗
         function closeFeedbackModal() {
             document.getElementById("feedbackModal").style.display = "none";
         }
 
-        // 新增功能：复制邮箱
+        // 复制邮箱
         function copyEmail() {
             var email = "seedtutshsb@keemail.me";
             var textarea = document.createElement('textarea');
@@ -1153,6 +1243,21 @@
             document.execCommand('copy');
             document.body.removeChild(textarea);
             alert("邮箱已复制：" + email);
+        }
+
+        // 显示质子跳转弹窗
+        function showProtonModal() {
+            document.getElementById("protonModal").style.display = "block";
+        }
+
+        // 关闭质子跳转弹窗
+        function closeProtonModal() {
+            document.getElementById("protonModal").style.display = "none";
+        }
+
+        // 跳转到中转站
+        function jumpToTransferStation() {
+            window.location.href = "https://seedtut2.github.io";
         }
     </script>
 </body>
