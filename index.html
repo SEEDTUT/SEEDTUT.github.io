@@ -70,7 +70,7 @@
         }
 
         body.dark-mode .action-btn:hover,
-        body.dark极客时间-mode .link:hover {
+        body.dark-mode .link:hover {
             background-color: #555;
         }
 
@@ -165,7 +165,7 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             width: 240px;
-            box-shadow: 0 6px 20px rgba(0, 123, 极客时间255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
             transform: translateZ(0);
             letter-spacing: 0.5px;
         }
@@ -241,7 +241,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 极客时间0.15);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 25px;
@@ -334,6 +334,17 @@
             box-shadow: 0 15px 35px rgba(255, 111, 97, 0.6);
         }
 
+        /* ========== 新增：seed百宝箱按钮样式 ========== */
+        #toolboxButton {
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        #toolboxButton:hover {
+            background: linear-gradient(45deg, #FF8C00, #FFA500, #FFD700);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.6);
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -403,7 +414,7 @@
 
         input[type="text"] {
             width: 100%;
-            padding: 15px;
+            padding: 15极客时间px;
             margin-top: 20px;
             font-size: 16px;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -411,7 +422,7 @@
             background: rgba(255, 255, 255, 0.1);
             color: white;
             backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5极客时间px);
             transition: all 0.3s ease;
         }
 
@@ -620,7 +631,7 @@
             cursor: pointer;
             z-index: 40;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 6极客时间px 20px rgba(74, 74, 104, 0.4);
+            box-shadow: 0 6px 20px rgba(74, 74, 104, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -646,7 +657,7 @@
             top: -8px;
             left: 0;
             width: 0;
-            height: 极客时间0;
+            height: 0;
             border-left: 12px solid transparent;
             border-right: 12px solid transparent;
             border-bottom: 8px solid white;
@@ -742,7 +753,6 @@
             </div>
             <div style="font-size: 16px; line-height: 1.8; color: #444; padding: 15px; background: rgba(255,255,255,0.15); border-radius: 10px; border-left: 4px solid rgba(142,197,252,0.7);">
                 <p>我是Seedtut 是一名中国版的开发者，致力于Minecraft相关模组的创作与开发。他的团队包括两位好友：txt和西瓜，他们一起探索各种创新项目和技术解决方案。
-
 </p>
             </div>
         </div>
@@ -756,6 +766,9 @@
         <button class="action-btn" id="addGroupButton">加QQ群</button>
         <button class="action-btn" id="memberButton">人员名单</button>
         <button class="action-btn" id="postButton">投稿</button>
+        
+        <!-- ========== 新增：seed百宝箱按钮 ========== -->
+        <button class="action-btn" id="toolboxButton">seed百宝箱</button>
     </div>
 
     <div class="footer">
@@ -900,6 +913,11 @@
             document.getElementById('confirmJumpBtn').addEventListener('click', jumpToTransferStation);
             document.getElementById('closePostModalBtn').addEventListener('click', closePostModal);
             
+            // ========== 新增：为seed百宝箱按钮添加事件监听 ==========
+            document.getElementById('toolboxButton').addEventListener('click', function() {
+                window.location.href = "https://seedgongju.github.io";
+            });
+            
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.action-btn') && 
                     !e.target.closest('.link') && 
@@ -984,6 +1002,7 @@
                 document.getElementById("addGroupButton").textContent = "加QQ群";
                 document.getElementById("memberButton").textContent = "人员名单";
                 document.getElementById("postButton").textContent = "投稿";
+                document.getElementById("toolboxButton").textContent = "seed百宝箱"; // 新增
                 document.getElementById("postModalTitle").textContent = "我的QQ号：3936343697";
                 document.getElementById("welcomeTitle").textContent = "欢迎您的加入！";
                 document.getElementById("memberTitle").textContent = "人员名单";
@@ -993,6 +1012,7 @@
                 document.getElementById("addGroupButton").textContent = "加QQ群";
                 document.getElementById("memberButton").textContent = "人員名單";
                 document.getElementById("postButton").textContent = "投稿";
+                document.getElementById("toolboxButton").textContent = "seed百寶箱"; // 新增
                 document.getElementById("postModalTitle").textContent = "我的QQ號：3936343697";
                 document.getElementById("welcomeTitle").textContent = "歡迎您的加入！";
                 document.getElementById("memberTitle").textContent = "人員名單";
@@ -1002,6 +1022,7 @@
                 document.getElementById("addGroupButton").textContent = "Join QQ Group";
                 document.getElementById("memberButton").textContent = "Member List";
                 document.getElementById("postButton").textContent = "Submit";
+                document.getElementById("toolboxButton").textContent = "seed Toolbox"; // 新增
                 document.getElementById("postModalTitle").textContent = "My QQ number: 3936343697";
                 document.getElementById("welcomeTitle").textContent = "Welcome to the community!";
                 document.getElementById("memberTitle").textContent = "Member List";
@@ -1048,7 +1069,7 @@
 
         function showRandomKey() {
             var randomKey = generateRandomKey();
-            document.getElementById("randomKey").textContent = randomKey;
+            document.getElementById("random极客时间Key").textContent = randomKey;
             document.getElementById("randomKeyModal").style.display = "block";
         }
 
